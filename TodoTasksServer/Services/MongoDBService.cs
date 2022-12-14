@@ -9,7 +9,7 @@ namespace TodoTasksServer.Services
 {
     public class MongoDBService
     {
-        private readonly IMongoDatabase database;
+        public readonly IMongoDatabase database;
         public MongoDBService(IOptions<MongoDBSettings> mongoDBSettings)
         {
             MongoClient client = new (mongoDBSettings.Value.ConnectionURI);
@@ -21,13 +21,27 @@ namespace TodoTasksServer.Services
         {
             try
             {
-                return Regex.Replace(className, "entity", "");
+                return className == null  || !className.ToLower().Contains("entity")
+                    ? throw new Exception()
+                    : Regex.Replace(className, "entity", "");
             }
             catch
             {
-                throw new InvalidOperationException("Cannot get collection name from classname.");
+                throw new InvalidOperationException("Cannot get collection name from class name. Class name should include 'Collection name' and 'Entity'");
             }
         }
+
+        //public async Task<(IEnumerable<T>, string)> QueryAsync<T>()
+        //{
+        //    var filter = Builders<TasksEntity>.Filter;
+        //    var filters = new List<FilterDefinition<TasksEntity>>();
+        //    var bson = new BsonDocument();
+        //    FilterDefinition<TasksEntity> cmd = null;
+        //    IOrderedFindFluent<TasksEntity, TasksEntity> query;
+        //    return
+        //}
+
+
         public async Task<(IEnumerable<T>, string)> GetAsync<T>() 
         {
             try

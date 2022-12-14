@@ -1,0 +1,50 @@
+﻿
+<div class="accordion" id="accordionTask">
+    <div class="accordion-item">
+        @{
+            if (Tasks != null &&  Tasks.Count > 0)
+            {
+                int i = 0;
+                foreach (var t in Tasks)
+                {
+                    string _idHeader = "task_head_" + i;
+                    string _idDesc = "task_decs_" + i;
+                    i++;
+                        <h2 class="accordion-header" id="@_idHeader">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#@_idDesc" aria-expanded="true" aria-controls="@_idDesc">
+                                   @t.Title
+                                </button>
+                            </h2>
+                        <div id="@_idDesc" class="accordion-collapse collapse show" aria-labelledby="@_idHeader">
+                                <div class="accordion-body">
+                                    @t.Description;
+                                </div>
+                         </div>
+                }
+            }
+        }
+    </div>
+</div>
+
+
+@code{
+
+    [Parameter]
+    public List<TaskModel> Tasks { get; set; }
+
+    public Task(){
+        var a = new TaskModel("Test", "testsfaf");
+        Tasks = new List<TaskModel>();
+        Tasks.Add(a);
+        Tasks.Add(a);
+        Tasks.Add(a);
+    }
+
+
+
+ 
+
+}
+
+
+

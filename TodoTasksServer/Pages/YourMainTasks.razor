@@ -1,0 +1,43 @@
+﻿@layout LoginLayout
+@inject TaskService taskservice
+@page "/YourMainTasks"
+
+@using TodoTasksServer.Services
+
+
+<div class="container">
+    <h3>Task</h3>
+    <TodoTasksServer.Components.TaskPart.AddTaskModal @ref="addTask" />
+    <button @onclick="AddNewTask">Add</button>
+    <div>
+        <TodoTasksServer.Components.TaskPart.Task Tasks="Tasks"></TodoTasksServer.Components.TaskPart.Task>
+    </div>
+    
+</div>
+
+
+
+@code {
+    TodoTasksServer.Components.TaskPart.AddTaskModal addTask;
+
+    public List<TaskModel> Tasks;
+    public bool isModalOpen = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Tasks = await taskservice.GetCustomerTasks("220011");
+    }
+
+  
+
+
+    async Task AddNewTask(){
+
+        addTask.OpenModal();
+        //Tasks = await taskservice.GetCustomerTasks("220011");
+    }
+
+}
+
+
+

@@ -13,6 +13,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddScoped<MongoDBService>();
 builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<TaskService>();
 
 var app = builder.Build();
 
@@ -27,10 +28,10 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseStaticFiles();
-
 app.UseRouting();
 
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
 
 app.Run();
+

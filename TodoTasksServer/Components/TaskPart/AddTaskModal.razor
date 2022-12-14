@@ -1,0 +1,69 @@
+﻿@using Microsoft.AspNetCore.Components.Web
+@using formcon
+@inject FormControl FormControl
+
+<div class="modal" style="display:@(isModalOpen ? "block":"none")">
+    <div class="modal-content" >
+        <h1>Add new</h1>
+        <div>
+            <label>Title</label>
+            <div></div>
+            <label>Description</label>
+        </div>
+        <div style="display:inline-block">
+            <button @onclick="CloseModal">Save </button>
+            <button @onclick="CloseModal">Cancel </button>
+        </div>
+     
+    </div>
+</div>
+
+
+@code {
+    bool isModalOpen { get; set; }
+
+    public void OpenModal(){
+        isModalOpen = true;
+        StateHasChanged();
+       
+      
+    }
+
+    void CloseModal()
+    {
+        isModalOpen = false;
+       
+    }
+}
+
+<style>
+
+    .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      
+    }
+
+    .modal-content {
+        background-color: #fff;
+        padding: 20px;
+        width: 80%;
+        max-width: 500px;
+        border-radius: 4px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        transition: opacity 1s ease-in-out;
+        opacity: @(isModalOpen ? 1 : 0);
+        
+    }
+
+</style>
