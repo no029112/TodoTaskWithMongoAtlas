@@ -33,6 +33,23 @@ namespace TodoTasksServer.Services
 
         }
 
+        public async Task<(bool , string)> SaveNewTask(string title,string desc, string custID)
+        {
+            var task = new TasksEntity()
+            {
+                CustomerID = custID,
+                Title = title,
+                Description = desc,
+                CreateDate = DateTime.Now,
+                IsActive = true,
+                isDone = false,
+                UpdateDate = DateTime.Now,
+            };
+             var result =await _mngdb.AddAsync(task);
+
+            return (status :result.Item1,message : result.Item2);
+
+        }
 
     }
 }

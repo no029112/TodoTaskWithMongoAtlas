@@ -11,13 +11,13 @@
                     string _idDesc = "task_decs_" + i;
                     i++;
                         <h2 class="accordion-header" id="@_idHeader">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#@_idDesc" aria-expanded="true" aria-controls="@_idDesc">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#@_idDesc" aria-expanded="true" aria-controls="@_idDesc">
                                    @t.Title
                                 </button>
                             </h2>
-                        <div id="@_idDesc" class="accordion-collapse collapse show" aria-labelledby="@_idHeader">
+                        <div id="@_idDesc" class="accordion-collapse collapse " aria-labelledby="@_idHeader">
                                 <div class="accordion-body">
-                                    @t.Description;
+                                    @t.Description
                                 </div>
                          </div>
                 }
@@ -35,9 +35,6 @@
     public Task(){
         var a = new TaskModel("Test", "testsfaf");
         Tasks = new List<TaskModel>();
-        Tasks.Add(a);
-        Tasks.Add(a);
-        Tasks.Add(a);
     }
 
 

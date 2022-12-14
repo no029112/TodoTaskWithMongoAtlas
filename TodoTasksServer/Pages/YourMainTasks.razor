@@ -7,34 +7,58 @@
 
 <div class="container">
     <h3>Task</h3>
-    <TodoTasksServer.Components.TaskPart.AddTaskModal @ref="addTask" />
-    <button @onclick="AddNewTask">Add</button>
+    <TodoTasksServer.Components.TaskPart.AddTaskModal Action="SaveNewTask" @ref="addTask" />
+    <button @onclick="ShowAddTask">Add</button>
     <div>
         <TodoTasksServer.Components.TaskPart.Task Tasks="Tasks"></TodoTasksServer.Components.TaskPart.Task>
     </div>
-    
+    <div style="color:red">
+        <p>@errorAddTaskMessage</p>
+    </div>
 </div>
 
 
 
 @code {
     TodoTasksServer.Components.TaskPart.AddTaskModal addTask;
-
+    Func<string, string, string, System.Threading.Tasks.Task> saveData;
+    string errorAddTaskMessage;
     public List<TaskModel> Tasks;
     public bool isModalOpen = false;
 
     protected override async Task OnInitializedAsync()
     {
+        saveData = async (string title, string desc, string custID) => await SaveNewTask(title, desc, custID);
         Tasks = await taskservice.GetCustomerTasks("220011");
+        if (Tasks is null)
+        {
+            Tasks = new List<TaskModel>();
+        }
     }
 
-  
-
-
-    async Task AddNewTask(){
-
+    void ShowAddTask()
+    {
         addTask.OpenModal();
-        //Tasks = await taskservice.GetCustomerTasks("220011");
+    }
+
+
+    public async Task SaveNewTask(string title, string desc,string custID)
+    {
+        var resultAddTask =  await taskservice.SaveNewTask(title, desc,"220011");
+        if (resultAddTask.Item1)
+        {
+            Tasks = await taskservice.GetCustomerTasks("220011");
+            if (Tasks is null)
+            {
+                Tasks = new List<TaskModel>();
+            }
+            addTask.CloseModal();
+            errorAddTaskMessage = string.Empty;
+        }
+        else{
+            errorAddTaskMessage = resultAddTask.Item2;
+        }
+        base.StateHasChanged();
     }
 
 }

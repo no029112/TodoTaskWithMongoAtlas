@@ -1,39 +1,57 @@
-﻿@using Microsoft.AspNetCore.Components.Web
-@using formcon
-@inject FormControl FormControl
+﻿@using System.ComponentModel.DataAnnotations
+
 
 <div class="modal" style="display:@(isModalOpen ? "block":"none")">
     <div class="modal-content" >
         <h1>Add new</h1>
-        <div>
-            <label>Title</label>
-            <div></div>
-            <label>Description</label>
-        </div>
-        <div style="display:inline-block">
-            <button @onclick="CloseModal">Save </button>
-            <button @onclick="CloseModal">Cancel </button>
-        </div>
-     
+        <form style="display:block" @onsubmit="(e) => OnSubmit(e)">
+            <div class="form-group">
+                <label for="txt_title">Title</label>
+                <input type="text" class="form-control" id="txt_title" aria-describedby="titleHelp" @bind=title placeholder="Enter title">
+                @*<small id="titleHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>*@
+            </div>
+            <div class="form-group">
+                <label for="txt_desc">Description</label>
+                <textarea type="text" class="form-control" id="txt_desc" aria-describedby="descHelp" @bind=description placeholder="Enter description" />
+                @*<small id="descHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>*@
+            </div>
+
+            <div style="display:inline-block;float: right">
+                <button type="submit" disabled style="display: none" aria-hidden="true"></button>
+                <button class="btn btn-primary" type="submit" @onclick="OnSave">Save </button>
+                <button class="btn btn-secondary" @onclick="CloseModal">Cancel </button>
+            </div>
+        </form>
     </div>
 </div>
 
 
 @code {
     bool isModalOpen { get; set; }
+    string title { get; set; }
+    string description { get; set; }
+
+    [Parameter]
+    public Func<string, string, string, System.Threading.Tasks.Task> Action { get; set; }
 
     public void OpenModal(){
         isModalOpen = true;
         StateHasChanged();
-       
-      
     }
 
-    void CloseModal()
+    async System.Threading.Tasks. Task OnSave(){
+         await Action(title, description, "220011");
+    }
+
+    public void CloseModal()
     {
         isModalOpen = false;
-       
+        title =string.Empty;
+        description = string.Empty;
+        StateHasChanged();
     }
+
+    bool OnSubmit(EventArgs e) => false;
 }
 
 <style>
@@ -63,7 +81,11 @@
         transform: translate(-50%, -50%);
         transition: opacity 1s ease-in-out;
         opacity: @(isModalOpen ? 1 : 0);
-        
     }
 
+    .form-group {
+        /* Other styles */
+        padding: 10px;
+        margin: 10px;
+    }
 </style>
