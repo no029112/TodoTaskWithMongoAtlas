@@ -10,16 +10,21 @@
                     string _idHeader = "task_head_" + i;
                     string _idDesc = "task_decs_" + i;
                     i++;
-                        <h2 class="accordion-header" id="@_idHeader">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#@_idDesc" aria-expanded="true" aria-controls="@_idDesc">
-                                   @t.Title
-                                </button>
-                            </h2>
-                        <div id="@_idDesc" class="accordion-collapse collapse " aria-labelledby="@_idHeader">
-                                <div class="accordion-body">
-                                    @t.Description
+                                <h2 class="accordion-header" id="@_idHeader">
+                                <div >
+                            <button class="accordion-button collapsed" style="align-items: baseline;" type="button" data-bs-toggle="collapse" data-bs-target="#@_idDesc" aria-expanded="true" aria-controls="@_idDesc">
+                                @t.Title   <span style="color:darkgray;font-size:9px"> &nbsp;- @t.CreateDate</span>
+                                    </button>
+                                 
+
                                 </div>
-                         </div>
+                              
+                                    </h2>
+                                <div id="@_idDesc" class="accordion-collapse collapse " aria-labelledby="@_idHeader">
+                                        <div class="accordion-body">
+                                            @t.Description
+                                        </div>
+                                 </div>
                 }
             }
         }

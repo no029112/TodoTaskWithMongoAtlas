@@ -6,9 +6,15 @@
 
 
 <div class="container">
-    <h3>Task</h3>
+    <div style="    display: flex;
+    justify-content: space-between;
+    align-items: baseline;">
+        <h3>Tasks</h3>
+        <button class="btn-primary btn" @onclick="ShowAddTask">Add</button>
+    </div>
+    
     <TodoTasksServer.Components.TaskPart.AddTaskModal Action="SaveNewTask" @ref="addTask" />
-    <button @onclick="ShowAddTask">Add</button>
+  
     <div>
         <TodoTasksServer.Components.TaskPart.Task Tasks="Tasks"></TodoTasksServer.Components.TaskPart.Task>
     </div>
